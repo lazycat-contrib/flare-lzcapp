@@ -9,35 +9,35 @@ application:
   subdomain: flare
   background_task: true
   multi_instance: false
-  gpu_accel: false
-  kvm_accel: false
-  usb_accel: false
   public_path:
     - /
-  routes:
-    - /=http://flare-app:3000/
+  upstreams:
+    - location: /
+      backend: http://flare-app:3000/
 services:
   flare-app:
     container_name: flare-app
-    image: registry.lazycat.cloud/czyt/flintsh/flare:1d7b01e583feb495
+    # upstream: flintsh/flare:2.0.0
+    image: flintsh/flare:2.0.0
     environment:
-      - DATABASE_URL=postgresql://flare:flarepassword@flare-postgres:5432/flare?schema=public
+      - DATABASE_URL=postgresql://flare:{{ stable_secret "db_password" }}@flare-postgres:5432/flare?schema=public
       - NEXTAUTH_URL=https://${LAZYCAT_APP_DOMAIN}
-      - NEXTAUTH_SECRET=lazycat_flare
+      - NEXTAUTH_SECRET={{ stable_secret "nextauth_secret" }}
     depends_on:
       - flare-postgres
     binds:
       - /lzcapp/var/uploads:/app/uploads
   flare-postgres:
     container_name: flare-postgres
-    image: registry.lazycat.cloud/czyt/library/postgres:b0193ab17e40d829
+    # upstream: library/postgres:16.15-alpine
+    image: library/postgres:16.15-alpine
     environment:
       - POSTGRES_USER=flare
-      - POSTGRES_PASSWORD=flarepassword
+      - POSTGRES_PASSWORD={{ stable_secret "db_password" }}
       - POSTGRES_DB=flare
     binds:
       - /lzcapp/var/data:/var/lib/postgresql/data
-    health_check:
+    healthcheck:
       test:
         - CMD-SHELL
         - pg_isready -U flare

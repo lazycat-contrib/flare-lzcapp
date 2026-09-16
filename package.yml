@@ -1,0 +1,14 @@
+package: cloud.lazycat.czyt.app.flare
+version: 1.2.0
+name: Flare
+description: "一个现代的自托管文件共享平台"
+min_os_version: "1.5.0"
+homepage: https://github.com/FlintSH/Flare
+author: FlintSH
+locales:
+  zh:
+    name: Flare
+    description: "一个现代的自托管文件共享平台"
+  en:
+    name: Flare
+    description: "A modern self-hosted file sharing platform"
