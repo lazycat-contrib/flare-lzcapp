@@ -18,7 +18,7 @@ services:
   flare-app:
     container_name: flare-app
     # upstream: flintsh/flare:2.0.0
-    image: flintsh/flare:2.0.0
+    image: registry.lazycat.cloud/czyt/flintsh/flare:026a46610b48d1f8
     environment:
       - DATABASE_URL=postgresql://flare:{{ stable_secret "db_password" }}@flare-postgres:5432/flare?schema=public
       - NEXTAUTH_URL=https://${LAZYCAT_APP_DOMAIN}
@@ -30,7 +30,7 @@ services:
   flare-postgres:
     container_name: flare-postgres
     # upstream: library/postgres:16.15-alpine
-    image: library/postgres:16.15-alpine
+    image: registry.lazycat.cloud/czyt/library/postgres:aa0ae8e7056ea3ea
     environment:
       - POSTGRES_USER=flare
       - POSTGRES_PASSWORD={{ stable_secret "db_password" }}
