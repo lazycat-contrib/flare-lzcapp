@@ -1,4 +1,5 @@
 package: cloud.lazycat.czyt.app.flare
+license: MIT
 version: 2.1.0
 name: Flare
 description: "一个现代的自托管文件共享平台"
